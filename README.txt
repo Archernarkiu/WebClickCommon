@@ -4,3 +4,6 @@ https://www.cnblogs.com/LandWind/articles/9102409.html
 
 待解决：
 从cookie进入页面
+
+webdriver官方文档
+https://selenium-python-zh.readthedocs.io/en/latest/locating-elements.html#id
