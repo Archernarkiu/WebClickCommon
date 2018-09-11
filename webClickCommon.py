@@ -5,7 +5,7 @@ import time
 from threading import Thread
 
 ACCOUNTS = {
-    "kiu623353897": "asdw789741"
+    "15152464412": "Asdw789741"
 #    ,"account2":"password2"
 }
 
@@ -16,13 +16,12 @@ BUY_URL = 'https://www.vmall.com/product/173840389.html'
 # 测试
 # BUY_URL = 'https://www.vmall.com/product/144380118.html'
 # 登录url
-LOGIN_URL = 'https://login.taobao.com/member/login.jhtml?spm=a21bo.2017.754894437.1.5af911d9VqWJJS&f=top&redirectURL=https%3A%2F%2Fwww.taobao.com%2F'
+LOGIN_URL = 'https://hwid1.vmall.com/CAS/portal/login.html?validated=true&themeName=red&service=https%3A%2F%2Fwww.vmall.com%2Faccount%2Facaslogin%3Furl%3Dhttps%253A%252F%252Fwww.vmall.com%252F&loginChannel=26000000&reqClientType=26&lang=zh-cn'
 # 登录成功手动确认URL
 LOGIN_SUCCESS_CONFIRM = 'https://www.baidu.com/'
 # 开始自动刷新等待抢购按钮出现的时间点,提前3分钟
 BEGIN_GO = '2017-11-16 10:07:10'
 
-cookie=''
 
 # 进到购买页面后提交订单
 def submitOrder(driver, user):
@@ -113,32 +112,29 @@ def goToBuy(driver, user):
 
 # 登录商城,登陆成功后手动先访问baidu页面跳转至抢购页面
 def loginMall(user, pwd):
-    driver = webdriver.Chrome()
-    driver.get(LOGIN_URL)
+    browser = webdriver.Chrome()
+    browser.get(LOGIN_URL)
     hasLogin = False
+    time.sleep(10)
     try:
-        switch = driver.find_element_by_xpath('//*[@id="J_Quick2Static"]')
-        switch.click()
-        account = driver.find_element_by_xpath('//*[@id="TPL_username_1"]')
+        time.sleep(5)
+        account = browser.find_element_by_xpath('//*[@id="login_userName"]')
         account.click()
         account.send_keys(user)
-        time.sleep(1)
-        password = driver.find_element_by_xpath('//*[@id="TPL_password_1"]')
+        time.sleep(5)
+        password = browser.find_element_by_xpath('//*[@id="login_password"]')
         password.click()
         password.send_keys(pwd)
         print(user + '输入了账号密码，等待手动登录')
-
-        savedCookies = driver.get_cookies()
-        print("cookie=",savedCookies)
     except:
         print(user + '账号密码不能输入')
 
     while True:
         time.sleep(3)
-        if LOGIN_SUCCESS_CONFIRM == driver.current_url:
+        if LOGIN_SUCCESS_CONFIRM == browser.current_url:
             print(user + '登录成功！')
             break
-    goToBuy(driver, user)
+    goToBuy(browser, user)
 
 
 if __name__ == "__main__":
