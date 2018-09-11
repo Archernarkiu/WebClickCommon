@@ -5,7 +5,7 @@ import time
 from threading import Thread
 
 ACCOUNTS = {
-    "kiu623353897": "asdw789741"
+    "account": "password"
 #    ,"account2":"password2"
 }
 
