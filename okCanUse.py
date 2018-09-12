@@ -9,13 +9,9 @@ ACCOUNTS = {
 #    ,"account2":"password2"
 }
 
-# MATE10 抢购地址
-# BUY_URL = 'https://www.vmall.com/product/396602535.html'
-# 保时捷
-BUY_URL = 'https://www.vmall.com/product/173840389.html'
-# 测试
-# BUY_URL = 'https://www.vmall.com/product/144380118.html'
-# 登录url
+
+BUY_URL = 'https://detail.tmall.com/item.htm?spm=a230r.1.14.6.7a2f134b5Xo9h5&id=44425281296&cm_id=140105335569ed55e27b&abbucket=16'
+
 LOGIN_URL = 'https://login.taobao.com/member/login.jhtml?spm=a21bo.2017.754894437.1.5af911d9VqWJJS&f=top&redirectURL=https%3A%2F%2Fwww.taobao.com%2F'
 # 登录成功手动确认URL
 LOGIN_SUCCESS_CONFIRM = 'https://www.taobao.com/'
@@ -79,15 +75,24 @@ def goToBuy(driver, user):
     while True:
         if time.time() > timestamp:  # 到了抢购时间
             try:
-                buyButton = driver.find_element_by_link_text('立即申购')
+                buyButton = driver.find_element_by_link_text('立即购买')
                 no_found_bug = False
                 print(user + '立即申购按钮出现了！！！')
                 # 点击摩卡金
                 # driver.find_element_by_xpath('//*[@id="pro-skus"]/dl[1]/div/ul/li[2]/div/a/p/span').click()
                 # 点击6gb+128gb
                 # driver.find_element_by_xpath('//*[@id="pro-skus"]/dl[3]/div/ul/li[2]/div/a/p/span').click()
+                print(user + '立即购买')
+
+                type1=driver.find_element_by_link_text("白色-圆线")
+                type1.click()
+
+                type2=driver.find_element_by_link_text("0.5m")
+                type2.click()
+
+                time.sleep(1)
                 buyButton.click()
-                print(user + '立即申购')
+
                 break
             except:
                 if no_found_bug:
@@ -111,25 +116,13 @@ def goToBuy(driver, user):
     onQueue(driver, user)
 
 
-# 登录商城,登陆成功后手动先访问baidu页面跳转至抢购页面
+# 登录商城,登陆成功后跳转至抢购页面
 def loginMall(user, pwd):
     driver = webdriver.Chrome()
-    driver.get('https://www.baidu.com/')
-    # switch = driver.find_element_by_xpath('//*[@id="J_Quick2Static"]')
-    # switch.click()
-    # account = driver.find_element_by_xpath('//*[@id="TPL_username_1"]')
-    # account.send_keys(user)
-    # password = driver.find_element_by_xpath('//*[@id="TPL_password_1"]')
-    # password.send_keys(pwd)
-    # submitButton = driver.find_element_by_xpath('//*[@id="J_SubmitStatic"]')
-    # submitButton.click()
-
-    savedCookies = driver.get_cookies()
-    print("cookie=",savedCookies)
+    driver.get(LOGIN_URL)
 
     while True:
         time.sleep(1)
-        print(driver.current_url)
         if LOGIN_SUCCESS_CONFIRM == driver.current_url:
             print(user + '登录成功！')
             break
